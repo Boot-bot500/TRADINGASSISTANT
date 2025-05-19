@@ -8,21 +8,13 @@ indice_usuario = {}
 
 @app.route("/message", methods=["POST"])
 def message():
-    numero = request.values.get('From', 'default')
-    msg_in = request.values.get('Body', '').strip()
+    from_number = request.values.get('From', 'desconocido')
+    incoming_msg = request.values.get('Body', '').strip()
 
-    if numero not in indice_usuario:
-        indice_usuario[numero] = 0
-
-    i = indice_usuario[numero]
-    if i < len(preguntas):
-        pregunta = preguntas[i]["Pregunta"]
-        indice_usuario[numero] += 1
-    else:
-        pregunta = "¡Gracias por completar el cuestionario!"
+    print(f"Mensaje recibido de {from_number}: {incoming_msg}")
 
     resp = MessagingResponse()
-    resp.message(pregunta)
+    resp.message("Hola, gracias por tu mensaje.")
     return str(resp)
 @app.route('/')
 def index():
