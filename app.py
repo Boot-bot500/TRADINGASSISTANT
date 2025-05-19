@@ -24,3 +24,6 @@ def message():
     resp = MessagingResponse()
     resp.message(pregunta)
     return str(resp)
+    @app.route('/')
+def index():
+    return '¡Trading Assistant está corriendo!'
