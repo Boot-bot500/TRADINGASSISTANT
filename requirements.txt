@@ -1,5 +1,3 @@
-flask
-gunicorn
+Flask
 twilio
-pandas
 openpyxl
