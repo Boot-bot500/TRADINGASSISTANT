@@ -8,13 +8,26 @@ indice_usuario = {}
 
 @app.route("/message", methods=["POST"])
 def message():
-    from_number = request.values.get('From', 'desconocido')
-    incoming_msg = request.values.get('Body', '').strip()
+    from_number = request.values.get("From", "desconocido")
+    incoming_msg = request.values.get("Body", "").strip()
 
     print(f"Mensaje recibido de {from_number}: {incoming_msg}")
 
+    # Si el usuario es nuevo, iniciar su índice
+    if from_number not in indice_usuario:
+        indice_usuario[from_number] = 0
+
+    index = indice_usuario[from_number]
+
+    if index < len(preguntas):
+        respuesta = preguntas[index]
+        indice_usuario[from_number] += 1
+    else:
+        respuesta = "Gracias, ya has respondido todas las preguntas."
+        del indice_usuario[from_number]  # Reiniciar usuario
+
     resp = MessagingResponse()
-    resp.message("Hola, gracias por tu mensaje.")
+    resp.message(respuesta)
     return str(resp)
 @app.route('/')
 def index():
